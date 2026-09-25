@@ -519,15 +519,17 @@ class ApixBackend(models.Model):
         storage_id=False,  # StorageID
         storage_key=False,  # StorageKey
         mark_received=False,  # Mark invoice as received
-        is_factoring=False,  # Whether the invoice being sent is factored
+        to_factoring=False,  # Send invoice to factoring
     ):
         values = OrderedDict()
 
         if show_soft:
-            values["soft"] = "Standard3WithFactoring" if is_factoring else "Standard3"
+            # Factoring uses a different software name
+            values["soft"] = "Standard3WithFactoring" if to_factoring else "Standard3"
 
         if show_ver:
-            values["ver"] = "1.0" if is_factoring else "2.0"
+            # Factoring uses a different software version
+            values["ver"] = "1.0" if to_factoring else "2.0"
 
         if mark_received:
             values["markReceived"] = "yes"
@@ -556,9 +558,9 @@ class ApixBackend(models.Model):
 
         return values
 
-    def SendInvoiceZIP(self, payload, is_factoring=False):
+    def SendInvoiceZIP(self, payload, to_factoring=False):
         _logger.debug("APIX SendInvoiceZIP")
-        values = self.get_default_url_attributes(is_factoring=is_factoring)
+        values = self.get_default_url_attributes(to_factoring=to_factoring)
 
         command = "invoices"
         url = self.get_url(command, values)
