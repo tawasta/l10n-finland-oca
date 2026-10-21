@@ -1,0 +1,4 @@
+- [Cetmix Oy](https://www.cetmix.com/)
+   - Jussi Lehto <jussi.lehto@cetmix.fi>
+- [Futural Oy](https://futural.fi):
+   - Jarmo Kortetjärvi <jarmo.kortetjarvi@futural.fi>
